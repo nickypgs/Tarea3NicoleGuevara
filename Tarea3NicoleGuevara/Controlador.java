@@ -19,11 +19,10 @@ public class Controlador
     private final String[] OPCIONES = {"Jugar","Instrucciones","Cerrar"};
     private final Icon ICONO = new ImageIcon(getClass().getResource("images/iconoDeNicole.jpg"));
 
-    public Controlador ()
-    {
+    public Controlador (){
         interfaz = new Interfaz();
 
-        experto = new Experto(interfaz);
+        experto = new Experto(interfaz, 5 , 25);
         opcion = 0;
     }
     
