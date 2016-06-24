@@ -9,23 +9,19 @@ import javax.swing.ImageIcon;
 public class Controlador
 {
     private Interfaz interfaz;
-
     private Experto experto;
-
     private int opcion;
-
     private final String MENSAJE_VENTANA = "Bienvenido; elija una opción para continuar.";
-    private final String TITULO_VENTANA = "Ahorcado";
+    private final String TITULO_VENTANA = "Ahorcao";
     private final String[] OPCIONES = {"Jugar","Instrucciones","Cerrar"};
     private final Icon ICONO = new ImageIcon(getClass().getResource("images/iconoDeNicole.jpg"));
 
     public Controlador (){
         interfaz = new Interfaz();
-
         experto = new Experto(interfaz, 5 , 25);
         opcion = 0;
     }
-    
+
     /**
      * Iniciar el juego, elegir entre 3 opciones: jugar, instrucciones o cerrar.
      */
@@ -43,8 +39,8 @@ public class Controlador
         } while (opcion == 0 || opcion == 1);
 
     }
-    
-     public static void main(String[] parametros)
+
+    public static void main(String[] parametros)
     {
         Controlador controlador;
         controlador = new Controlador();
