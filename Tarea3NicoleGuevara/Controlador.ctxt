@@ -1,9 +1,14 @@
 #BlueJ class context
 comment0.params=
 comment0.target=Controlador()
+comment0.text=\r\n\ Constructor\ de\ la\ clase\ Controlador.\r\n
 comment1.params=
 comment1.target=void\ iniciar()
 comment1.text=\r\n\ Iniciar\ el\ juego,\ elegir\ entre\ 3\ opciones\:\ jugar,\ instrucciones\ o\ cerrar.\r\n
-comment2.params=parametros
-comment2.target=void\ main(java.lang.String[])
-numComments=3
+comment2.params=
+comment2.target=void\ reiniciar()
+comment2.text=\r\n\ Reinicia\ el\ juego.\r\n
+comment3.params=parametros
+comment3.target=void\ main(java.lang.String[])
+comment3.text=\r\n\ Inicia\ el\ programa.\r\n
+numComments=4

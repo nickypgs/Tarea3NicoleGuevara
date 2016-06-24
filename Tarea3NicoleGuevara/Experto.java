@@ -14,7 +14,7 @@ public class Experto
     //Título de la ventana.
     private final String TITULO_VENTANA = "Laberinto";
     //Instrucciones del juego.
-    private final String INSTRUCCIONES_JUEGO = "El juego en encontrar el camino para llegar del ratón al queso";
+    private final String INSTRUCCIONES_JUEGO = "El juego consiste en encontrar el camino para llegar del ratón al queso.";
     //Generador de numeros Random;
     private Random generador;
     //Icono de las ventanas.
