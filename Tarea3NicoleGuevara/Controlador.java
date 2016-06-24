@@ -15,22 +15,24 @@ public class Controlador
     private int opcion;
 
     private final String MENSAJE_VENTANA = "Bienvenido; elija una opción para continuar.";
-    private final String TITULO_VENTANA = "Ahorcado";
+    private final String MENSAJE_LADO = "Digite el tamaño de lado \n(debe ser un numero entero)";    
+    private final String MENSAJE_PORCENTAJE = "Digite el porcentaje de casillas vacias \n(Número decimal)";
+    private final String TITULO_VENTANA = "Laberinto";
     private final String[] OPCIONES = {"Jugar","Instrucciones","Cerrar"};
     private final Icon ICONO = new ImageIcon(getClass().getResource("images/iconoDeNicole.jpg"));
 
     public Controlador (){
         interfaz = new Interfaz();
-
-        experto = new Experto(interfaz, 5 , 25);
+        int lado = interfaz.pedirInt(MENSAJE_LADO,TITULO_VENTANA);
+        double porcentaje = interfaz.pedirDouble(MENSAJE_PORCENTAJE, TITULO_VENTANA);
+        experto = new Experto(interfaz, lado , porcentaje);
         opcion = 0;
     }
     
     /**
      * Iniciar el juego, elegir entre 3 opciones: jugar, instrucciones o cerrar.
      */
-    public void iniciar()
-    {
+    public void iniciar(){
         do {
             opcion = interfaz.mostrarMenu(MENSAJE_VENTANA,TITULO_VENTANA,ICONO,OPCIONES);
             switch (opcion)
@@ -41,11 +43,9 @@ public class Controlador
                 break;
             }
         } while (opcion == 0 || opcion == 1);
-
     }
     
-     public static void main(String[] parametros)
-    {
+     public static void main(String[] parametros){
         Controlador controlador;
         controlador = new Controlador();
         controlador.iniciar();
