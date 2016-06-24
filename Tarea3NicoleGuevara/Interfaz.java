@@ -2,10 +2,10 @@ import javax.swing.JOptionPane;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 /**
- * Write a description of class Interfaz here.
+ * La clase Interfaz se encarga de la interacción con el usuario por medio de la clase JOptionPane.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @NicoleGuevara 
+ * @23.06.2016.
  */
 public class Interfaz extends JOptionPane
 {
