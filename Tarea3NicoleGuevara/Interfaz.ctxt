@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=MENSAJE_VENTANA\ TITULO_VENTANA\ ICONO\ OPCIONES
+comment0.target=int\ mostrarMenu(java.lang.String,\ java.lang.String,\ javax.swing.Icon,\ java.lang.String[])
+comment0.text=\r\n\ Mostrar\ el\ men\u00FA\ presente\ en\ la\ clase\ Controlador.\r\n
+comment1.params=MENSAJE\ TITULO_VENTANA\ ICONO
+comment1.target=void\ mostrarMensaje(java.lang.String,\ java.lang.String,\ javax.swing.Icon)
+comment1.text=\r\n\ Mostrar\ un\ mensaje.\ \r\n
+comment2.params=MENSAJE\ TITULO_VENTANA
+comment2.target=void\ mostrarMensajeUsuario(java.lang.String,\ java.lang.String)
+numComments=3
