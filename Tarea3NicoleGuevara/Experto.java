@@ -40,6 +40,7 @@ public class Experto {
         inicializarLaberinto();
         ponerRaton();
         ponerVacios();
+        encontrarSolucion();
     }
 
     /**
@@ -143,8 +144,11 @@ public class Experto {
     */
     public boolean esValida(int fila, int columna){
         boolean valida = false;
-        if(fila < laberinto.length && columna < laberinto[fila].length && !esPared(fila,columna)){
-            valida = true;
+       // System.out.println("fila " + fila +" Columna "+columna);
+        if((fila >= 0 && fila < this.lado) && (columna >= 0 && columna < this.lado)){
+            if(!esPared(fila,columna)&&!(this.laberinto[fila][columna]==4)){
+                valida = true;
+            }
         }
         return valida;
     }
@@ -153,35 +157,41 @@ public class Experto {
      * 
      */
     public void encontrarSolucion(){
-        encontrarSolucion(filaInicial,columnaInicial,0);
+        int resultado =  solucion(filaInicial,columnaInicial);
+        if(laberinto[filaInicial][columnaInicial] == 0 ){
+            interfaz.mostrarMensaje("EL LABERINTO NO TIENE SOLUCION","Laberinto",ICONO);
+        }else{
+            comenzarJuego();
+        }
+        
     }
     
-    /**
-     * direccion 0 arriba, 1 derecha, 2, izquierda, 3 abajo
-     */
-    public int encontrarSolucion(int fila, int columna, int direccion){
-        int resultado = -1;
-        if( this.laberinto[fila][columna] == 2){
-            resultado = 5;
-            this.laberinto[fila][columna] = 5;
-        }
-        else{
-            if(esValida(fila-1, columna)){
-                resultado = encontrarSolucion(fila+1,columna,0);
+    public int solucion(int fila, int columna){
+
+        int resultado =-1;
+        if(esValida(fila,columna)){
+            if(this.laberinto[fila][columna]== 2){
+                resultado = 6;
             }else{
-                if(esValida(fila,columna+1)){
-                    resultado = encontrarSolucion(fila,columna+1,1);
-                }else{
-                    if(esValida(fila,columna-1)){
-                        resultado = encontrarSolucion(fila,columna-1,2);
-                    }else{
-                        if(esValida(fila+1,columna)){
-                            resultado = encontrarSolucion(fila+1,columna,3);
+                this.laberinto[fila][columna] = 4;
+                resultado = solucion(fila-1,columna); // me voy hacia arriba
+                if(resultado == -1 ){
+                    resultado = solucion(fila,columna+1); // me voy hacia la derecha
+                    if(resultado == -1 ){
+                        resultado = solucion(fila+1,columna); // voy hacia abajo
+                        if(resultado == -1 ){
+                            resultado = solucion(fila, columna-1);
                         }
                     }
-                } 
+                }
+                if(resultado == -1 ){
+                    this.laberinto[fila][columna] = 0;
+                }
+                
             }
         }
+            
+        
         return resultado;
     }
     
@@ -194,7 +204,23 @@ public class Experto {
             String mat = ""; 
             for( int fila = 0; fila < laberinto.length; fila++ ) { 
                 for( int columna = 0; columna < laberinto[0].length; columna++ ) { 
-                    mat = mat + laberinto[fila][columna] + "    "; 
+                    if(this.laberinto[fila][columna]== 0 ){
+                        mat += " B ";
+                    }
+                    if(this.laberinto[fila][columna]== 1 ){
+                        mat += " R ";
+                    }
+                    if(this.laberinto[fila][columna]== 2 ){
+                        mat += " Q ";
+                    }
+                    if(this.laberinto[fila][columna]== -1 ){
+                        mat += " X ";
+                    }
+                    if(this.laberinto[fila][columna]== 4 ){
+                        mat += " C ";
+                    }
+              
+                   // mat = mat + laberinto[fila][columna] + "    "; 
                 } 
                 mat = mat + "\n"; 
             }  
