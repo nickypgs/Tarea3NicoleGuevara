@@ -8,8 +8,7 @@ import java.lang.Character;
  * @NicoleGuevara
  * @23.06.2016
  */
-public class Experto
-{
+public class Experto {
     private Interfaz interfaz;
     //Título de la ventana.
     private final String TITULO_VENTANA = "Laberinto";
@@ -25,12 +24,14 @@ public class Experto
     private double porcentajeVacio;
     //Lado de la matriz.
     private int lado;
+    //posicion inicial del raton
+    private int filaInicial;
+    private int columnaInicial;
 
     /**
      * Constructor de la clase Experto.
      */
-    public Experto (Interfaz laInterfaz, int lado, double porcentajeVacio)
-    {
+    public Experto (Interfaz laInterfaz, int lado, double porcentajeVacio)  {
         interfaz = laInterfaz;
         this.lado = lado;
         this.porcentajeVacio = porcentajeVacio;        
@@ -44,8 +45,7 @@ public class Experto
     /**
      * Contructor de la clase Experto.
      */
-    public Experto (int lado, double porcentajeVacio)
-    {
+    public Experto (int lado, double porcentajeVacio){
         this.lado = lado;
         this.porcentajeVacio = porcentajeVacio;        
         laberinto = new int [this.lado][this.lado];
@@ -53,13 +53,13 @@ public class Experto
         inicializarLaberinto();
         ponerRaton();
         ponerVacios();
+        encontrarSolucion();
     }
 
     /**
      * Muestra las instrcciones del juego.
      */ 
-    public void mostrarInstrucciones()
-    {
+    public void mostrarInstrucciones(){
         interfaz.mostrarMensaje(INSTRUCCIONES_JUEGO,"Laberinto",ICONO);
     }
 
@@ -69,22 +69,27 @@ public class Experto
      */
     public void ponerRaton(){
         int esquina = generador.nextInt(4);
-        switch(esquina)
-        {
+        switch(esquina){
             case 0:
             laberinto[0][0] = 1;
+            filaInicial = columnaInicial = 0;
             laberinto[this.lado-1][this.lado-1] = 2;
             break;
             case 1:
             laberinto[0][this.lado-1] = 1;
+            filaInicial =0;
+            columnaInicial = this.lado-1;
             laberinto[this.lado-1][0] = 2;
             break;
             case 2:
             laberinto[this.lado-1][0] = 1;
+            filaInicial = this.lado-1;
+            columnaInicial = 0;
             laberinto[0][this.lado-1] = 2;
             break;
             default:
             laberinto[this.lado-1][this.lado-1] = 1;
+            filaInicial = columnaInicial = this.lado-1;
             laberinto[0][0] = 2;
             break;
         }
@@ -93,11 +98,9 @@ public class Experto
     /**
      * Retorna si una casilla del laberinto esta vacío.
      */
-    public boolean esPared(int fila, int columna)
-    {
+    public boolean esPared(int fila, int columna){
         boolean esPared = false;
-        if(laberinto[fila][columna] == -1)
-        {
+        if(laberinto[fila][columna] == -1){
             esPared = true;
         }
         return esPared;
@@ -106,12 +109,9 @@ public class Experto
     /**
      * Inicializa el laberinto con todas las casillas como pared.
      */
-    public void inicializarLaberinto()
-    {
-        for(int fila = 0 ; fila < laberinto.length; fila++)
-        {
-            for( int columna = 0; columna < laberinto[fila].length; columna++)
-            {
+    public void inicializarLaberinto(){
+        for(int fila = 0 ; fila < laberinto.length; fila++){
+            for( int columna = 0; columna < laberinto[fila].length; columna++){
                 laberinto[fila][columna] = -1;
             }
         }
@@ -120,8 +120,7 @@ public class Experto
     /**
      * Coloca el porcentaje indicado por el usuario de casillas vacias.
      */
-    public void ponerVacios()
-    {
+    public void ponerVacios(){
         double porcentajeActual = 0;
         int contador = 0;
         int fila = 0;
@@ -138,7 +137,55 @@ public class Experto
         }
         comenzarJuego();
     }
-
+    
+    /**
+     *Retorna si una posicion es valida en el laberinto 
+    */
+    public boolean esValida(int fila, int columna){
+        boolean valida = false;
+        if(fila < laberinto.length && columna < laberinto[fila].length && !esPared(fila,columna)){
+            valida = true;
+        }
+        return valida;
+    }
+    
+    /**
+     * 
+     */
+    public void encontrarSolucion(){
+        encontrarSolucion(filaInicial,columnaInicial,0);
+    }
+    
+    /**
+     * direccion 0 arriba, 1 derecha, 2, izquierda, 3 abajo
+     */
+    public int encontrarSolucion(int fila, int columna, int direccion){
+        int resultado = -1;
+        if( this.laberinto[fila][columna] == 2){
+            resultado = 5;
+            this.laberinto[fila][columna] = 5;
+        }
+        else{
+            if(esValida(fila-1, columna)){
+                resultado = encontrarSolucion(fila+1,columna,0);
+            }else{
+                if(esValida(fila,columna+1)){
+                    resultado = encontrarSolucion(fila,columna+1,1);
+                }else{
+                    if(esValida(fila,columna-1)){
+                        resultado = encontrarSolucion(fila,columna-1,2);
+                    }else{
+                        if(esValida(fila+1,columna)){
+                            resultado = encontrarSolucion(fila+1,columna,3);
+                        }
+                    }
+                } 
+            }
+        }
+        return resultado;
+    }
+    
+    
     /**
      * Muestra el laberinto.
      */
